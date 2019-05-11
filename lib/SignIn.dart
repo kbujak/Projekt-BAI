@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'AuthService.dart';
+import 'package:my_app/firestore/AuthService.dart';
+import 'Menu.dart';
 
-void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class SignInWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -40,21 +40,38 @@ class UserProfileState extends State<UserProfile> {
     super.initState();
 
     // Subscriptions are created here
-    authService.profile.listen((state) => setState(() => _profile = state));
-
-    authService.loading.listen((state) => setState(() => _loading = state));
+    //authService.profile.listen((state) => setState(() => _profile = state));
+    //authService.loading.listen((state) => setState(() => _loading = state));
+    
+    /*authService.profile.listen((data) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MenuRoute()),
+        );
+    }, onDone: () {
+    }, onError: (error) {
+      print("Some Error");
+    });*/
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      Container(padding: EdgeInsets.all(20), child: Text(_profile.toString())),
+      //Container(padding: EdgeInsets.all(20), child: Text(_profile.toString())),
       Text(_loading.toString())
     ]);
   }
 }
 
 class LoginButton extends StatelessWidget {
+
+  void lol(BuildContext context){
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MenuRoute()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -62,10 +79,10 @@ class LoginButton extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return MaterialButton(
-              onPressed: () => authService.signOut(),
+              onPressed: () => lol(context),
               color: Colors.red,
               textColor: Colors.white,
-              child: Text('Signout'),
+              child: Text('Go to menu'),
             );
           } else {
             return MaterialButton(
