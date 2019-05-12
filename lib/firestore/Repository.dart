@@ -1,8 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:my_app/model/Chat.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Repository {
@@ -22,30 +19,47 @@ class Repository {
   }
 
   void addChatMember(String chatId) async {
-    DocumentReference ref = _db.collection('rooms').document(chatId);
+    DocumentReference refRooms = _db.collection('rooms').document(chatId);
     var user = await _auth.currentUser();
-    ref.updateData({
+    refRooms.updateData({
       'members': FieldValue.arrayUnion([user.uid])
     });
+
+
   }
 
-  void getChatMembers(List<String> members){
-    return _db.collection("users")
+  Stream<DocumentSnapshot> getChatInfo(String roomId) {
+    return Firestore.instance
+        .collection("rooms")
+        .document(roomId)
+        .snapshots();
   }
 
   Stream<QuerySnapshot> getChatMessages(String roomId) {
     return Firestore.instance
         .collection("messages")
         .where("roomId", isEqualTo: roomId)
-        //.orderBy("sent", descending: true)
+        .orderBy("sent", descending: true)
+        .snapshots();
+  }
+
+  Stream<QuerySnapshot> getChatMembers(String roomId) {
+    return _db.collection('users')
+        .where("rooms", arrayContains: roomId)
         .snapshots();
   }
 
   void addMessage(String roomId, String message) async {
     print('i am here');
     DocumentReference ref = _db.collection('messages').document();
-    //var creator = await readUIDLocally();
     var user = await _auth.currentUser();
+    DocumentReference refUsers = _db.collection('users').document(user.uid);
+
+    await addChatMember(roomId);
+
+    refUsers.updateData({
+      'rooms': FieldValue.arrayUnion([roomId])
+    });
 
     return ref.setData({
       //'id': chat.id,
@@ -58,18 +72,28 @@ class Repository {
     }, merge: true);
   }
 
-  void saveChat(String name, List<String> tags) async {
+  Future<SaveChatResult> saveChat(String name, List<String> tags) async {
     DocumentReference ref = _db.collection('rooms').document();
-    //var creator = await readUIDLocally();
     var user = await _auth.currentUser();
 
-    return ref.setData({
+
+    ref.setData({
       //'id': chat.id,
       'creator': user.uid,
       'name': name,
       'tags': tags,
       'members': [user.uid]
     }, merge: true);
+
+    return SaveChatResult(ref.documentID, user.email);
+  }
+}
+
+class SaveChatResult{
+  String chatId, userEmail;
+  SaveChatResult(String chatId, userEmail){
+    this.chatId = chatId;
+    this.userEmail = userEmail;
   }
 }
 

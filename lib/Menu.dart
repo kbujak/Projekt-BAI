@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'CreateChatRoom.dart';
+import 'firestore/Repository.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -36,8 +37,7 @@ class MenuRoute extends StatelessWidget {
               ),
               RaisedButton(
                 child: Text('Look for people around you'),
-                onPressed: () {
-                },
+                onPressed: () {},
               ),
             ],
           ),

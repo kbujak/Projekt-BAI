@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'firestore/Repository.dart';
 import 'ChatPage.dart';
+import 'model/User.dart';
+import 'firestore/AuthService.dart';
 
 class CreateChatRoom extends StatelessWidget {
   @override
@@ -54,28 +56,31 @@ class _MyCustomFormState extends State<MyCustomForm> {
           RaisedButton(
               child: Text('Go to chat'),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ChatPage("realmadryt287@gmail.com", "-LefLjIgKuVrTlrFs5wa")),
-                );
+                authService.getCurrentUser().then((user) {
+                  print(user.toString());
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ChatPage(
+                            user.email.toString(),
+                            //TODO for now hardcoded chat
+                            "-LegksTMPdJ4omainO7p")),
+                  );
+                });
               })
         ],
       )),
       floatingActionButton: FloatingActionButton(
-        // When the user presses the button, show an alert dialog with the
-        // text the user has typed into our text field.
         onPressed: () {
-          repository.saveChat(chatName.text, tags.text.split(" "));
-          /*return showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                // Retrieve the text the user has typed in using our
-                // TextEditingController
-                content: Text(chatName.text + tags.text),
-              );
-            },
-          );*/
+          repository.saveChat(chatName.text, tags.text.split(" ")).then((r){
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ChatPage(
+                      r.userEmail.toString(),
+                      r.chatId.toString())),
+            );
+          });
         },
         tooltip: 'Show me the value!',
         child: Icon(Icons.add),

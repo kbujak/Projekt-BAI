@@ -9,3 +9,4 @@ class Chat {
     this.tags = tags;
   }
 }
+
