@@ -34,17 +34,20 @@ class _ChatPageState extends State<ChatPage> {
                       reverse: true,
                       itemBuilder: (_, int index) {
                         DocumentSnapshot document =
-                        snapshot.data.documents[index];
+                            snapshot.data.documents[index];
+
+                        print('HERE sender' + document['sender'].toString());
+                        print('HERE message' + document['message'].toString());
 
                         bool isOwnMessage = false;
                         if (document['sender'] == widget._userName) {
                           isOwnMessage = true;
                         }
                         return isOwnMessage
-                            ? _ownMessage(
-                            document['message'], document['user_name'])
-                            : _message(
-                            document['message'], document['user_name']);
+                            ? _ownMessage(document['message'],
+                                document['sender'], document['photoUrl'])
+                            : _message(document['message'], document['sender'],
+                                document['photoUrl']);
                       },
                       itemCount: snapshot.data.documents.length,
                     );
@@ -60,8 +63,8 @@ class _ChatPageState extends State<ChatPage> {
                       child: new TextField(
                         controller: _controller,
                         //onSubmitted: _handleSubmit(),
-                        decoration:
-                        new InputDecoration.collapsed(hintText: "send message"),
+                        decoration: new InputDecoration.collapsed(
+                            hintText: "send message"),
                       ),
                     ),
                     new Container(
@@ -71,7 +74,8 @@ class _ChatPageState extends State<ChatPage> {
                             color: Colors.blue,
                           ),
                           onPressed: () {
-                            repository.addMessage(widget._roomId, _controller.text);
+                            repository.addMessage(
+                                widget._roomId, _controller.text);
                           }),
                     ),
                   ],
@@ -82,31 +86,43 @@ class _ChatPageState extends State<ChatPage> {
         ));
   }
 
-  Widget _ownMessage(String message, String userName) {
+  Widget _ownMessage(String message, String userName, String photoUrl) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 10.0,),
+            SizedBox(
+              height: 10.0,
+            ),
+            Container(
+              child: Image.network(photoUrl),
+              width: 30.0,
+              height: 30.0,
+            ),
             Text(userName),
             Text(message),
           ],
         ),
-        Icon(Icons.person),
       ],
     );
   }
 
-  Widget _message(String message, String userName) {
+  Widget _message(String message, String userName, String photoUrl) {
     return Row(
       children: <Widget>[
-        Icon(Icons.person),
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 10.0,),
+            SizedBox(
+              height: 10.0,
+            ),
+            Container(
+              child: Image.network(photoUrl),
+              width: 30.0,
+              height: 30.0,
+            ),
             Text(userName),
             Text(message),
           ],

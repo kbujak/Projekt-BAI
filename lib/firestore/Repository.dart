@@ -24,18 +24,24 @@ class Repository {
   void addChatMember(String chatId) async {
     DocumentReference ref = _db.collection('rooms').document(chatId);
     var user = await _auth.currentUser();
-    ref.updateData({'members': FieldValue.arrayUnion(["loool"])});
+    ref.updateData({
+      'members': FieldValue.arrayUnion([user.uid])
+    });
   }
 
-  Stream<QuerySnapshot> getChatMessages(String roomId){
+  void getChatMembers(List<String> members){
+    return _db.collection("users")
+  }
+
+  Stream<QuerySnapshot> getChatMessages(String roomId) {
     return Firestore.instance
         .collection("messages")
         .where("roomId", isEqualTo: roomId)
-        .orderBy("sent", descending: true)
+        //.orderBy("sent", descending: true)
         .snapshots();
   }
 
-  void addMessage(String roomId, String message) async{
+  void addMessage(String roomId, String message) async {
     print('i am here');
     DocumentReference ref = _db.collection('messages').document();
     //var creator = await readUIDLocally();
@@ -47,7 +53,8 @@ class Repository {
       'sender': user.email,
       'senderId': user.uid,
       'sent': DateTime.now(),
-      'message': message
+      'message': message,
+      'photoUrl': user.photoUrl
     }, merge: true);
   }
 
