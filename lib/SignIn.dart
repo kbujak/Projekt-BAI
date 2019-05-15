@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'AuthService.dart';
+import 'package:my_app/firestore/AuthService.dart';
+import 'Menu.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
+class SignInWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,12 +16,16 @@ class MyApp extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   LoginButton(), // <-- Built with StreamBuilder
+                  MaterialButton(
+                    onPressed: () => authService.signOut(),
+                    color: Colors.red,
+                    textColor: Colors.white,
+                    child: Text('Sign out'),
+                  ),
                   UserProfile() // <-- Built with StatefulWidget
                 ],
               ),
-            )
-        )
-    );
+            )));
   }
 }
 
@@ -38,23 +41,24 @@ class UserProfileState extends State<UserProfile> {
   @override
   initState() {
     super.initState();
-
-    // Subscriptions are created here
-    authService.profile.listen((state) => setState(() => _profile = state));
-
-    authService.loading.listen((state) => setState(() => _loading = state));
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      Container(padding: EdgeInsets.all(20), child: Text(_profile.toString())),
       Text(_loading.toString())
     ]);
   }
 }
 
 class LoginButton extends StatelessWidget {
+  void goToMenu(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MenuRoute()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -62,10 +66,10 @@ class LoginButton extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return MaterialButton(
-              onPressed: () => authService.signOut(),
+              onPressed: () => goToMenu(context),
               color: Colors.red,
               textColor: Colors.white,
-              child: Text('Signout'),
+              child: Text('Go to menu'),
             );
           } else {
             return MaterialButton(

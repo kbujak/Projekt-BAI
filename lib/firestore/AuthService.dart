@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxdart/rxdart.dart';
+import 'Repository.dart';
 
 class AuthService {
   // Dependencies
@@ -31,6 +32,11 @@ class AuthService {
     });
   }
 
+  Future<FirebaseUser> getCurrentUser() async{
+    FirebaseUser user = await _auth.currentUser();
+    return user;
+  }
+
   Future<FirebaseUser> googleSignIn() async {
     loading.add(true);
 
@@ -40,6 +46,7 @@ class AuthService {
     FirebaseUser user = await _auth.signInWithGoogle(accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
 
     updateUserData(user);
+    repository.saveUIDLocally(user.uid);
 
     // Done
     loading.add(false);
