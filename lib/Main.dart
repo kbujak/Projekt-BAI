@@ -25,6 +25,7 @@ class HomeRoute extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => SignInWidget()),
+                   // MaterialPageRoute(builder: (context) => RegisterWidget())
                   );
                 },
               ),

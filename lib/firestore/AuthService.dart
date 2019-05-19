@@ -70,6 +70,21 @@ class AuthService {
     _auth.signOut();
   }
 
+  Future<FirebaseUser> signInWithEmailAndPassword(String email, String password) async {
+    FirebaseUser user = await _auth.signInWithEmailAndPassword(email: email, password: password);
+    return user;
+  }
+
+/*  Future<FirebaseUser> createUserWithEmailAndPassword(String email, String password) async{
+    FirebaseUser user = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+    return user;
+  }*/
+
+  Future<String> signUp(String email, String password) async {
+    FirebaseUser user = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+    return user.uid;
+  }
+
 }
 
 final AuthService authService = AuthService();
