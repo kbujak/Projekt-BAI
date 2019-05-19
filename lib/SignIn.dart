@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/firestore/AuthService.dart';
 import 'Menu.dart';
+import 'package:location/location.dart';
+import 'firestore/Repository.dart';
 
 class SignInWidget extends StatelessWidget {
   @override
@@ -38,16 +40,31 @@ class UserProfileState extends State<UserProfile> {
   Map<String, dynamic> _profile;
   bool _loading = false;
 
+
+  Location location = Location();
+  Map<String, double> currentLocation;
+
   @override
   initState() {
     super.initState();
+    location.onLocationChanged().listen((value) {
+      setState(() {
+        print('LOCATION CHANGED');
+        currentLocation = value;
+        repository.updatePosition(currentLocation["latitude"].toString(), currentLocation["longitude"].toString());
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: <Widget>[
-      Text(_loading.toString())
-    ]);
+    return Column(
+        children: <Widget>[
+          currentLocation == null
+              ? CircularProgressIndicator()
+              : Text("Location:" + currentLocation["latitude"].toString() + " " + currentLocation["longitude"].toString()),
+        ],
+      );
   }
 }
 
@@ -55,7 +72,7 @@ class LoginButton extends StatelessWidget {
   void goToMenu(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => MenuRoute()),
+      MaterialPageRoute(builder: (context) => Home()),
     );
   }
 
