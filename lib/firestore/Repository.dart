@@ -43,6 +43,18 @@ class Repository {
         .snapshots();
   }
 
+  Stream<QuerySnapshot> getCurrentUser(String uid){
+    return _db.collection('users')
+        .where("uid", isEqualTo: uid)
+       .snapshots();
+  }
+
+  Stream<QuerySnapshot> getPeopleAroundYou() {
+    return _db.collection('users')
+        .limit(10)
+        .snapshots();
+  }
+
   Stream<QuerySnapshot> getChatMessages(String roomId) {
     return Firestore.instance
         .collection("messages")
