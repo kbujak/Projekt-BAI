@@ -6,8 +6,8 @@ import 'package:my_app/Menu.dart';
 enum FormType { login, register }
 
 class LogInWidget extends StatefulWidget {
-  LogInWidget({this.auth});
-  final AuthService auth;
+  /*LogInWidget({this.auth});
+  final AuthService auth;*/
 
   @override
   State<StatefulWidget> createState() => new _LogInWidget();
@@ -153,7 +153,7 @@ class _LogInWidget extends State<LogInWidget> {
       _isLoading = true;
     });
     try {
-      FirebaseUser user= await widget.auth.signInWithEmailAndPassword(
+      FirebaseUser user= await authService.signInWithEmailAndPassword(
           _emailController.text, _passwordController.text);
       print('Signed in: ${user.displayName}');
       goToMenu(context);

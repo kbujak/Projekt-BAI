@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'SignIn.dart';
+import 'SingInAnonymousWidget.dart';
+import 'firestore/AuthService.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -15,26 +17,55 @@ class HomeRoute extends StatelessWidget {
         appBar: AppBar(
           title: Text('First Route'),
         ),
-        body: Center(
-          child: Column(
-            children: <Widget>[
-              Text('Welcome to MAKK chat'),
-              RaisedButton(
-                child: Text('User'),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SignInWidget()),
-                   // MaterialPageRoute(builder: (context) => RegisterWidget())
-                  );
-                },
-              ),
-              RaisedButton(
-                child: Text('Guest'),
-                onPressed: () {},
-              ),
-            ],
-          ),
-        ));
+        body: TypeOfUserMenu(),
+    );
   }
+}
+
+
+class TypeOfUserMenu extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: authService.user,
+      builder: (context, snapshot)
+        {
+          if(snapshot.hasData)
+            {
+              return Center(
+                child: Column(
+                  children: <Widget>[
+                    Text('Welcome to MAKK chat'),
+                    RaisedButton(
+                      child: Text('User'),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SignInWidget()),
+                        );
+                      },
+                    ),
+                    RaisedButton(
+                      child: Text('Guest'),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SingInAnonymousWidget()),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              );
+            }
+          else
+            {
+              return Text('User is already logged in!');
+              //navigate back to menu
+            }
+        }
+
+    );
+  }
+
 }

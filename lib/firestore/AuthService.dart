@@ -38,7 +38,6 @@ class AuthService {
   }
 
   Future<FirebaseUser> googleSignIn() async {
-    loading.add(true);
 
     GoogleSignInAccount googleUser = await _googleSignIn.signIn();
 
@@ -75,14 +74,22 @@ class AuthService {
     return user;
   }
 
-/*  Future<FirebaseUser> createUserWithEmailAndPassword(String email, String password) async{
+  Future<FirebaseUser> createUserWithEmailAndPassword(String email, String password) async{
     FirebaseUser user = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+    updateUserData(user);
+    repository.saveUIDLocally(user.uid);
     return user;
-  }*/
+  }
 
   Future<String> signUp(String email, String password) async {
     FirebaseUser user = await _auth.createUserWithEmailAndPassword(email: email, password: password);
     return user.uid;
+  }
+
+  Future<FirebaseUser> signInAnonymously() async{
+    FirebaseUser user = await _auth.signInAnonymously();
+    updateUserData(user);
+    return user;
   }
 
 }

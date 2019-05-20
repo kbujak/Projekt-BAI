@@ -54,6 +54,7 @@ class UserProfileState extends State<UserProfile> {
 }
 
 class LoginButton extends StatelessWidget {
+
   void goToMenu(BuildContext context) {
     Navigator.push(
       context,
@@ -65,7 +66,7 @@ class LoginButton extends StatelessWidget {
   {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => LogInWidget(auth : new AuthService())),
+      MaterialPageRoute(builder: (context) => LogInWidget(/*auth : new AuthService()*/)),
     );
   }
 

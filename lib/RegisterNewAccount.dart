@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'firestore/AuthService.dart';
+import 'Menu.dart';
 
 class RegisterNewAccount extends StatefulWidget {
   const RegisterNewAccount({Key key}) : super(key: key);
@@ -10,7 +12,7 @@ class RegisterNewAccount extends StatefulWidget {
 
 class _RegisterNewAccountState extends State<RegisterNewAccount> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  var _auth = new AuthService(); //FirebaseAuth.instance
   bool _agreedToTOS = true;
   String _name;
   String _email;
@@ -149,9 +151,9 @@ class _RegisterNewAccountState extends State<RegisterNewAccount> {
     if (_formKey.currentState.validate()) {
       try {
         _formKey.currentState.save();
-        FirebaseUser user = await _auth.createUserWithEmailAndPassword(
-            email: _email, password: _password);
+        FirebaseUser user = await _auth.createUserWithEmailAndPassword(_email, _password);
         print('Registered user : ${user.uid}');
+        goToMenu(context);
       } catch (ex) {
         var dialog = AlertDialog(
           title: Text('Something went wrong!'),
@@ -170,5 +172,12 @@ class _RegisterNewAccountState extends State<RegisterNewAccount> {
     setState(() {
       _agreedToTOS = newValue;
     });
+  }
+
+  void goToMenu(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MenuRoute()),
+    );
   }
 }
