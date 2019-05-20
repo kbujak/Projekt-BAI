@@ -6,8 +6,6 @@ import 'package:my_app/Menu.dart';
 enum FormType { login, register }
 
 class LogInWidget extends StatefulWidget {
-  /*LogInWidget({this.auth});
-  final AuthService auth;*/
 
   @override
   State<StatefulWidget> createState() => new _LogInWidget();

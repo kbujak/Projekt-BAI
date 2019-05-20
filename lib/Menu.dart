@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'CreateChatRoom.dart';
-import 'firestore/Repository.dart';
+import 'firestore/AuthService.dart';
+import 'Main.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -10,6 +11,16 @@ void main() {
 }
 
 class MenuRoute extends StatelessWidget {
+
+
+  _singOutAndBackToLogIn (BuildContext context){
+    authService.signOut();
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => HomeRoute()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +49,12 @@ class MenuRoute extends StatelessWidget {
               RaisedButton(
                 child: Text('Look for people around you'),
                 onPressed: () {},
+              ),
+              MaterialButton(
+                onPressed: () => _singOutAndBackToLogIn(context),
+                color: Colors.red,
+                textColor: Colors.white,
+                child: Text('Sign out'),
               ),
             ],
           ),

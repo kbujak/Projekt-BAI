@@ -8,28 +8,31 @@ import 'RegisterNewAccount.dart';
 class SignInWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'FlutterBase',
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-            appBar: AppBar(
-              title: Text('Project BAI'),
-              backgroundColor: Colors.amber,
-            ),
-            body: Center(
-              child: Column(
-                children: <Widget>[
-                  LoginButton(), // <-- Built with StreamBuilder
-                  MaterialButton(
-                    onPressed: () => authService.signOut(),
-                    color: Colors.red,
-                    textColor: Colors.white,
-                    child: Text('Sign out'),
+    return FutureBuilder(
+        future: authService.getCurrentUser(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            return MenuRoute();
+          }
+
+          /// other way there is no user logged.
+          return MaterialApp(
+              title: 'FlutterBase',
+              debugShowCheckedModeBanner: false,
+              home: Scaffold(
+                  appBar: AppBar(
+                    title: Text('Project BAI'),
+                    backgroundColor: Colors.amber,
                   ),
-                  UserProfile() // <-- Built with StatefulWidget
-                ],
-              ),
-            )));
+                  body: Center(
+                    child: Column(
+                      children: <Widget>[
+                        LoginButton(), // <-- Built with StreamBuilder
+                        UserProfile() // <-- Built with StatefulWidget
+                      ],
+                    ),
+                  )));
+        });
   }
 }
 
@@ -49,12 +52,11 @@ class UserProfileState extends State<UserProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: <Widget>[Text(_loading.toString())]);
+    return Column(children: <Widget>[/*Text(_loading.toString())*/]);
   }
 }
 
 class LoginButton extends StatelessWidget {
-
   void goToMenu(BuildContext context) {
     Navigator.push(
       context,
@@ -62,19 +64,17 @@ class LoginButton extends StatelessWidget {
     );
   }
 
-  void goToLogInForm(BuildContext context)
-  {
+  void goToLogInForm(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => LogInWidget(/*auth : new AuthService()*/)),
+      MaterialPageRoute(
+          builder: (context) => LogInWidget()),
     );
   }
 
-  void createNewAccount(BuildContext context)
-  {
+  void createNewAccount(BuildContext context) {
     Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => RegisterNewAccount()));
+        context, MaterialPageRoute(builder: (context) => RegisterNewAccount()));
   }
 
   @override
@@ -113,10 +113,8 @@ class LoginButton extends StatelessWidget {
                       child: Text('Login with Google'),
                     )),
               ],
-            ); //;,
+            );
           }
         });
-
-
   }
 }

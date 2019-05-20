@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'firestore/AuthService.dart';
 import 'package:my_app/Menu.dart';
 
-
 class SingInAnonymousWidget extends StatefulWidget {
   const SingInAnonymousWidget({Key key}) : super(key: key);
 
@@ -15,27 +14,34 @@ class SingInAnonymousWidgetState extends State<SingInAnonymousWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'FlutterBase',
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Project BAI'),
-          backgroundColor: Colors.amber,
-        ),
-        body: new ListView(children: <Widget>[
-          new Form(
-            key: _formKey,
-            child: new Column(
-              children: <Widget>[
-                _createAnonymousForm(),
-                _showLogInButton(),
-              ],
-            ),
-          ),
-        ]),
-      ),
-    );
+    return FutureBuilder(
+        future: authService.getCurrentUser(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            return MenuRoute();
+          } else
+            return MaterialApp(
+              title: 'FlutterBase',
+              debugShowCheckedModeBanner: false,
+              home: Scaffold(
+                appBar: AppBar(
+                  title: Text('Project BAI'),
+                  backgroundColor: Colors.amber,
+                ),
+                body: new ListView(children: <Widget>[
+                  new Form(
+                    key: _formKey,
+                    child: new Column(
+                      children: <Widget>[
+                        _createAnonymousForm(),
+                        _showLogInButton(),
+                      ],
+                    ),
+                  ),
+                ]),
+              ),
+            );
+        });
   }
 
   Widget _createAnonymousForm() {
@@ -66,15 +72,15 @@ class SingInAnonymousWidgetState extends State<SingInAnonymousWidget> {
                     child: Container(
                         color: Colors.white,
                         child: TextFormField(
-                            keyboardType: TextInputType.text,
-                            decoration: const InputDecoration(
-                              labelText: 'Nickname',
-                            ),
-                            validator: (String value) {
-                              if (value.trim().isEmpty) {
-                                return 'Nickname can' 't be empty!';
-                              }
-                            },
+                          keyboardType: TextInputType.text,
+                          decoration: const InputDecoration(
+                            labelText: 'Nickname',
+                          ),
+                          validator: (String value) {
+                            if (value.trim().isEmpty) {
+                              return 'Nickname can' 't be empty!';
+                            }
+                          },
                         ))),
               ])),
         ),
@@ -98,11 +104,10 @@ class SingInAnonymousWidgetState extends State<SingInAnonymousWidget> {
     if (_formKey.currentState.validate()) {
       try {
         _formKey.currentState.save();
-        var user =  await authService.signInAnonymously();
+        var user = await authService.signInAnonymously();
         print('Registered user : ${user.uid}');
         goToMenu(context);
-      }
-      catch (ex) {
+      } catch (ex) {
         var dialog = AlertDialog(
           title: Text('Something went wrong!'),
           content: Text(ex.toString()),
@@ -122,5 +127,4 @@ class SingInAnonymousWidgetState extends State<SingInAnonymousWidget> {
       MaterialPageRoute(builder: (context) => MenuRoute()),
     );
   }
-
 }
