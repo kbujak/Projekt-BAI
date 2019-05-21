@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "404774180926-ereh5jn97ia2fg454ash90e4p3c0p3p9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.project.bai",
+            "certificate_hash": "e2ba94939088030a585571e2386bdd03dd4492fd"
+          }
+        },
+        {
           "client_id": "404774180926-7fptf18se7esrllthbdspo655mheh4nh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -38,6 +46,13 @@
             {
               "client_id": "404774180926-6j6ek1nkpcc7sko5cot3qfhfdcdf8mk2.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "404774180926-d51bqss0lqpcdtuvta8df36lm99mi611.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.project.bai"
+              }
             }
           ]
         }

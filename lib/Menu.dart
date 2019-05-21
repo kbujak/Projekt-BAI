@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'CreateChatRoom.dart';
-import 'firestore/Repository.dart';
-import 'SearchPeople.dart';
+import 'firestore/AuthService.dart';
+import 'Main.dart';
+
+enum MenuState {
+  Status,
+  Chats,
+  Interests,
+  Tags,
+  People,
+}
 
 void main() {
   runApp(MaterialApp(
@@ -11,15 +19,19 @@ void main() {
 }
 
 class PlaceholderWidget extends StatelessWidget {
-  final Color color;
+  final MenuState menuState;
 
-  PlaceholderWidget(this.color);
+  PlaceholderWidget(this.menuState);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: color,
-    );
+    if (menuState == MenuState.Status) {
+      return CreateChatRoom();
+    } else {
+      return Container(
+        child: Text(menuState.toString()),
+      );
+    }
   }
 }
 
@@ -32,29 +44,39 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
+
   final List<Widget> _children = [
-    CreateChatRoom(),
-    PlaceholderWidget(Colors.deepOrange),
-    PlaceholderWidget(Colors.green),
-    PlaceholderWidget(Colors.blueAccent),
-    SearchPeopleWidget(),
-    PlaceholderWidget(Colors.cyanAccent),
+    PlaceholderWidget(MenuState.Status),
+    PlaceholderWidget(MenuState.Chats),
+    PlaceholderWidget(MenuState.Interests),
+    PlaceholderWidget(MenuState.Tags),
+    PlaceholderWidget(MenuState.People),
   ];
 
-
+  _singOutAndGoToMain() {
+    authService.signOut();
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => HomeRoute()),
+    );
+  }
 
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
     });
+    if (_currentIndex == 5) {
+      _singOutAndGoToMain();
+    }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Project BAI'),
-          backgroundColor: Colors.amber,
-        ),
+      appBar: AppBar(
+        title: Text('Project BAI'),
+        backgroundColor: Colors.amber,
+      ),
       body: _children[_currentIndex], // new
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -82,8 +104,7 @@ class _HomeState extends State<Home> {
             title: Text('People'),
           ),
           new BottomNavigationBarItem(
-              icon: Icon(Icons.remove_circle),
-              title: Text('Logout'))
+              icon: Icon(Icons.remove_circle), title: Text('Logout'))
         ],
       ),
     );
