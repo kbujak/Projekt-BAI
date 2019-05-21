@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'CreateChatRoom.dart';
 import 'firestore/Repository.dart';
+import 'SearchPeople.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -36,9 +37,11 @@ class _HomeState extends State<Home> {
     PlaceholderWidget(Colors.deepOrange),
     PlaceholderWidget(Colors.green),
     PlaceholderWidget(Colors.blueAccent),
-    PlaceholderWidget(Colors.brown),
+    SearchPeopleWidget(),
     PlaceholderWidget(Colors.cyanAccent),
   ];
+
+
 
   void onTabTapped(int index) {
     setState(() {
