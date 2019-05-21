@@ -24,8 +24,16 @@ class Repository {
     refRooms.updateData({
       'members': FieldValue.arrayUnion([user.uid])
     });
+  }
 
+  void updatePosition(String lat, String lon) async {
+    var user = await _auth.currentUser();
+    DocumentReference refUsers = _db.collection('users').document(user.uid);
 
+    refUsers.updateData({
+      'lat': lat,
+      'lon': lon
+    });
   }
 
   Stream<DocumentSnapshot> getChatInfo(String roomId) {

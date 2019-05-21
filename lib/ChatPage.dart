@@ -61,9 +61,6 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: new AppBar(
-          title: new Text("chat page"),
-        ),
         body: Container(
           child: Column(
             children: <Widget>[
@@ -97,14 +94,14 @@ class _ChatPageState extends State<ChatPage> {
                                 ? _ownMessage(
                                 document['message'],
                                 document['sender'],
-                                document['photoUrl'],
-                                //members[document['senderId']].photoURL,
+                                //document['photoUrl'],
+                                members[document['senderId']].photoURL,
                                 document['sent'].toString())
                                 : _message(
                                 document['message'],
                                 document['sender'],
-                                document['photoUrl'],
-                                //members[document['senderId']].photoURL,
+                                //document['photoUrl'],
+                                members[document['senderId']].photoURL,
                                 document['sent'].toString());
                           },
                           itemCount: snapshot1.data.documents.length,
