@@ -18,7 +18,7 @@ class HomeRoute extends StatelessWidget {
         future: authService.getCurrentUser(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
-            return MenuRoute();
+            return Home();
           }
           else{
             return Scaffold(

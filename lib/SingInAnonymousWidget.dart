@@ -18,7 +18,7 @@ class SingInAnonymousWidgetState extends State<SingInAnonymousWidget> {
         future: authService.getCurrentUser(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
-            return MenuRoute();
+            return Home();
           } else
             return MaterialApp(
               title: 'FlutterBase',
@@ -124,7 +124,7 @@ class SingInAnonymousWidgetState extends State<SingInAnonymousWidget> {
   void goToMenu(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => MenuRoute()),
+      MaterialPageRoute(builder: (context) => Home()),
     );
   }
 }

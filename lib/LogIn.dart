@@ -174,7 +174,7 @@ class _LogInWidget extends State<LogInWidget> {
   void goToMenu(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => MenuRoute()),
+      MaterialPageRoute(builder: (context) => Home()),
     );
   }
 }

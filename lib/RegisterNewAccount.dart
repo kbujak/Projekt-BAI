@@ -177,7 +177,7 @@ class _RegisterNewAccountState extends State<RegisterNewAccount> {
   void goToMenu(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => MenuRoute()),
+      MaterialPageRoute(builder: (context) => Home()),
     );
   }
 }
