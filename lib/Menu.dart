@@ -53,12 +53,11 @@ class _HomeState extends State<Home> {
     PlaceholderWidget(MenuState.People),
   ];
 
-  _singOutAndGoToMain(){
+  _singOutAndGoToMain() {
     authService.signOut();
     Navigator.push(
       context,
-      MaterialPageRoute(
-          builder: (context) => HomeRoute()),
+      MaterialPageRoute(builder: (context) => HomeRoute()),
     );
   }
 
