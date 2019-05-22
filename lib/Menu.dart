@@ -4,6 +4,8 @@ import 'firestore/AuthService.dart';
 import 'firestore/Repository.dart';
 import 'Main.dart';
 import 'SearchPeople.dart';
+import 'ActiveChats.dart';
+
 enum MenuState {
   Status,
   Chats,
@@ -48,10 +50,10 @@ class _HomeState extends State<Home> {
 
   final List<Widget> _children = [
     PlaceholderWidget(MenuState.Status),
-    PlaceholderWidget(MenuState.Chats),
+    ActiveChatsWidget(),
     PlaceholderWidget(MenuState.Interests),
     PlaceholderWidget(MenuState.Tags),
-    PlaceholderWidget(MenuState.People),
+    SearchPeopleWidget(),
   ];
 
   _singOutAndGoToMain() {
