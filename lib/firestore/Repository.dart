@@ -68,6 +68,18 @@ class Repository {
         .where("rooms", arrayContains: roomId)
         .snapshots();
   }
+  
+  Stream<QuerySnapshot> getChatsByParticipatory(String userId) {
+    return _db.collection("rooms")
+        .where("members", arrayContains: userId)
+        .snapshots();
+  }
+
+  Stream<QuerySnapshot> getChatsByCreator(String userId) {
+    return _db.collection("rooms")
+        .where("creator", isEqualTo: userId)
+        .snapshots();
+  }
 
   void addMessage(String roomId, String message) async {
     print('i am here');
