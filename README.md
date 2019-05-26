@@ -1,16 +1,30 @@
-# my_app
+Dimension by HTML5 UP
+html5up.net | @ajlkn
+Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 
-A new Flutter project.
 
-## Getting Started
+This is Dimension, a fun little one-pager with modal-ized (is that a word?) "pages"
+and a cool depth effect (click on a menu item to see what I mean). Simple, fully
+responsive, and kitted out with all the usual pre-styled elements you'd expect.
+Hope you dig it :)
 
-This project is a starting point for a Flutter application.
+Demo images* courtesy of Unsplash, a radtastic collection of CC0 (public domain) images
+you can use for pretty much whatever.
 
-A few resources to get you started if this is your first Flutter project:
+(* = not included)
 
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
+AJ
+aj@lkn.io | @ajlkn
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+
+Credits:
+
+	Demo Images:
+		Unsplash (unsplash.com)
+
+	Icons:
+		Font Awesome (fontawesome.io)
+
+	Other:
+		jQuery (jquery.com)
+		Responsive Tools (github.com/ajlkn/responsive-tools)
