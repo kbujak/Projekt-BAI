@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'firestore/AuthService.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:math';
+import 'package:my_app/model/LocationInfo.dart';
+import 'package:location/location.dart';
 
 
 
@@ -16,8 +18,28 @@ class SearchPeopleWidget extends StatefulWidget{
 class SearchPeopleState extends State<SearchPeopleWidget> {
   FirebaseUser user;
 
+  bool isLocationKnown = false;
+  Location location = Location();
+  Map<String, double> currentLocation;
+
+
   @override
   void initState() {
+
+    location.onLocationChanged().listen((value) {
+      print('location changed');
+      currentLocation = value;
+      repository.updatePosition(currentLocation["latitude"].toString(), currentLocation["longitude"].toString());
+      if(!isLocationKnown) {
+        repository.fetchLocationInfo(currentLocation["latitude"].toString(),
+            currentLocation["longitude"].toString()).then((loc) {
+          print('FORMATTED ' + loc.formatted);
+          isLocationKnown = true;
+          repository.updateLocationInfo(loc.formatted);
+        });
+      }
+
+    });
 
     authService.getCurrentUser().then((firebaseUser) {
       setState(() {
