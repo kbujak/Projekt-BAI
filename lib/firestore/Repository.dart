@@ -81,6 +81,12 @@ class Repository {
         .snapshots();
   }
 
+  Stream<QuerySnapshot> getChatsByTag(String tag) {
+    return _db.collection("rooms")
+        .where("tags", arrayContains: tag)
+        .snapshots();
+  }
+
   void addMessage(String roomId, String message) async {
     print('i am here');
     DocumentReference ref = _db.collection('messages').document();
