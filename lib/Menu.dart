@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'CreateChatRoom.dart';
 import 'firestore/AuthService.dart';
-import 'firestore/Repository.dart';
 import 'Main.dart';
 import 'SearchPeople.dart';
 import 'ActiveChats.dart';
+import 'SearchTags.dart';
 
 enum MenuState {
   Status,
@@ -52,7 +52,7 @@ class _HomeState extends State<Home> {
     PlaceholderWidget(MenuState.Status),
     ActiveChatsWidget(),
     PlaceholderWidget(MenuState.Interests),
-    PlaceholderWidget(MenuState.Tags),
+    SearchTagsWidget(),
     SearchPeopleWidget(),
   ];
 
