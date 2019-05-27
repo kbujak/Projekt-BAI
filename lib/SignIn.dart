@@ -6,6 +6,7 @@ import 'package:location/location.dart';
 import 'firestore/AuthService.dart';
 import 'RegisterNewAccount.dart';
 import 'firestore/Repository.dart';
+import 'package:my_app/model/LocationInfo.dart';
 
 
 class SignInWidget extends StatelessWidget {
@@ -47,6 +48,8 @@ class UserProfile extends StatefulWidget {
 class UserProfileState extends State<UserProfile> {
   Map<String, dynamic> _profile;
   bool _loading = false;
+  bool isLocationKnown = false;
+
 
   Location location = Location();
   Map<String, double> currentLocation;
@@ -55,23 +58,25 @@ class UserProfileState extends State<UserProfile> {
   initState() {
     super.initState();
     location.onLocationChanged().listen((value) {
-      setState(() {
-        print('LOCATION CHANGED');
+      print('location changed');
         currentLocation = value;
         repository.updatePosition(currentLocation["latitude"].toString(), currentLocation["longitude"].toString());
-      });
+        if(!isLocationKnown) {
+          repository.fetchLocationInfo(currentLocation["latitude"].toString(),
+              currentLocation["longitude"].toString()).then((loc) {
+            print('FORMATTED ' + loc.formatted);
+            isLocationKnown = true;
+            repository.updateLocationInfo(loc.formatted);
+          });
+        }
+
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        currentLocation == null
-            ? CircularProgressIndicator()
-            : Text("Location:" + currentLocation["latitude"].toString() + " " + currentLocation["longitude"].toString()),
-      ],
-    );  }
+    return Container();
+  }
 }
 
 class LoginButton extends StatelessWidget {

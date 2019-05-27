@@ -71,7 +71,7 @@ class SearchPeopleState extends State<SearchPeopleWidget> {
                       if (snapshot.hasData) {
                         return new ListView.builder(
                           padding: new EdgeInsets.all(8.0),
-                          reverse: true,
+                          reverse: false,
                           itemBuilder: (_, int index) {
                             var currentUser = currentUserSnapshot.data.documents[0];
 
@@ -83,6 +83,7 @@ class SearchPeopleState extends State<SearchPeopleWidget> {
                             var latCurrentUser = currentUser['lat'].toString() == "null" ? "-" : currentUser['lat'].toString();
                             var lonCurrentUser = currentUser['lon'].toString() == "null" ? "-" : currentUser['lon'].toString();
                             var status = document['status'].toString() == "null" ? "-" : document['status'].toString();
+                            var locationInfo = document['locationInfo'].toString() == "null" ? "-" : document['locationInfo'].toString();
                             var distance = "-";
 
                             print('test: ' + lat + ' ' + lon + ' ' + latCurrentUser + ' ' + lonCurrentUser);
@@ -96,7 +97,7 @@ class SearchPeopleState extends State<SearchPeopleWidget> {
                               distance = distanceInKmBetweenEarthCoordinates(latD, lonD, latCurrentUserD, lonCurrentUserD).toStringAsFixed(1);
                             }
 
-                            return peopleItem(email, lat, lon, status, distance);
+                            return peopleItem(email, lat, lon, status, distance, locationInfo);
                           },
                           itemCount: snapshot.data.documents.length,
                         );
@@ -111,7 +112,7 @@ class SearchPeopleState extends State<SearchPeopleWidget> {
   }
 }
 
-Widget peopleItem(String nickname, String lat, String lon, String status, String distance) {
+Widget peopleItem(String nickname, String lat, String lon, String status, String distance, String locationInfo) {
   return Container(
       decoration: new BoxDecoration(
         color: Colors.amber,
@@ -125,6 +126,7 @@ Widget peopleItem(String nickname, String lat, String lon, String status, String
           Text(lat + ', ' + lon),
           Text(status),
           Text(distance),
+          Text(locationInfo),
           SizedBox(
             height: 10.0,
           ),

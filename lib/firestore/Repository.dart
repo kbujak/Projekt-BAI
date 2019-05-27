@@ -1,10 +1,31 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:my_app/model/LocationInfo.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 class Repository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final Firestore _db = Firestore.instance;
+
+  Future<LocationInfo> fetchLocationInfo(String lat, String lon) async {
+    var apiKey = "key=863dd0ce9edc43e3a3696954b3182b67";
+    var latLonParams = "&q=" + lat + "+" + lon;
+    var otherParams = "&pretty=1&no_annotations=1";
+    var baseUrl = "https://api.opencagedata.com/geocode/v1/json?";
+
+    var url = baseUrl + apiKey + latLonParams + otherParams;
+
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      return LocationInfo.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load post');
+    }
+  }
 
   readUIDLocally() async {
     final prefs = await SharedPreferences.getInstance();
@@ -23,6 +44,15 @@ class Repository {
     var user = await _auth.currentUser();
     refRooms.updateData({
       'members': FieldValue.arrayUnion([user.uid])
+    });
+  }
+
+  void updateLocationInfo(String locationInfo) async{
+    var user = await _auth.currentUser();
+    DocumentReference refUsers = _db.collection('users').document(user.uid);
+
+    refUsers.updateData({
+      'locationInfo': locationInfo
     });
   }
 
@@ -52,6 +82,7 @@ class Repository {
   Stream<QuerySnapshot> getPeopleAroundYou() {
     return _db.collection('users')
         .limit(10)
+        .orderBy('lon', descending: true)
         .snapshots();
   }
 
