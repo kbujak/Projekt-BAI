@@ -15,6 +15,9 @@ class SearchTagsState extends State<SearchTagsWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Tags"),
+      ),
       resizeToAvoidBottomPadding: false,
       body: Container(
         margin: EdgeInsets.fromLTRB(40, 100, 40, 200),
@@ -57,7 +60,6 @@ class SearchTagsState extends State<SearchTagsWidget> {
               child: Text("Search"),
               onPressed: () {
                 authService.getCurrentUser().then((user) {
-                  print(user.toString());
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -71,7 +73,6 @@ class SearchTagsState extends State<SearchTagsWidget> {
           ],
         ),
       ),
-      backgroundColor: Colors.green,
     );
   }
 }

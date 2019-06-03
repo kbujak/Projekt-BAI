@@ -49,7 +49,7 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
 
   final List<Widget> _children = [
-    PlaceholderWidget(MenuState.Status),
+    CreateChatRoom(),
     ActiveChatsWidget(),
     PlaceholderWidget(MenuState.Interests),
     SearchTagsWidget(),
@@ -77,10 +77,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Project BAI'),
-        backgroundColor: Colors.amber,
-      ),
       body: _children[_currentIndex], // new
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

@@ -77,6 +77,9 @@ class SearchPeopleState extends State<SearchPeopleWidget> {
       return Text('loading..');
     }else {
       return new Scaffold(
+        appBar: AppBar(
+          title: Text("People"),
+        ),
           body: Container(
           child: Column(
           children: <Widget>[

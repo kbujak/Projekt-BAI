@@ -27,8 +27,17 @@ class ActiveChatsState extends State<ActiveChatsWidget> {
   @override
   Widget build(BuildContext context) {
     return user == null ?
-    Text("User not authenticated") :
     Scaffold(
+      appBar: AppBar(
+        title: Text("Active chats"),
+      ),
+      body: Text("User not authenticated"),
+    )
+        :
+    Scaffold(
+      appBar: AppBar(
+        title: Text("Active chats"),
+      ),
       body: Container(
         padding: EdgeInsets.only(top: 10),
         child: Column(

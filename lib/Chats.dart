@@ -33,6 +33,9 @@ class ChatsState extends State<ChatsWidget> {
   Widget build(BuildContext context) {
     if (user != null && widget.chatsQuery != null) {
       return Scaffold(
+        appBar: AppBar(
+          title: Text(widget.tag),
+        ),
         body: Container(
           padding: EdgeInsets.only(top: 40),
           child: Column(

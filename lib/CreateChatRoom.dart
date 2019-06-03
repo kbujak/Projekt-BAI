@@ -38,6 +38,9 @@ class _MyCustomFormState extends State<MyCustomForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Status"),
+      ),
       body: Center(
           child: Column(
         children: <Widget>[

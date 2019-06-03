@@ -42,7 +42,12 @@ class AuthService {
     GoogleSignInAccount googleUser = await _googleSignIn.signIn();
 
     GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-    FirebaseUser user = await _auth.signInWithGoogle(accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+
+    AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    FirebaseUser user = await _auth.signInWithCredential(credential);
 
     updateUserData(user);
     repository.saveUIDLocally(user.uid);
