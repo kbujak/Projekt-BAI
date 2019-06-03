@@ -54,6 +54,7 @@ class _HomeState extends State<Home> {
     PlaceholderWidget(MenuState.Interests),
     SearchTagsWidget(),
     SearchPeopleWidget(),
+    Container()
   ];
 
   _singOutAndGoToMain() {

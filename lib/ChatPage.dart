@@ -100,8 +100,8 @@ class _ChatPageState extends State<ChatPage> {
                                 : _message(
                                 document['message'],
                                 document['sender'],
-                                //document['photoUrl'],
-                                members[document['senderId']].photoURL,
+                                "https://image.freepik.com/free-vector/man-avatar-profile-round-icon_24640-14044.jpg",
+                                //members[document['senderId']].photoURL,
                                 document['sent'].toString());
                           },
                           itemCount: snapshot1.data.documents.length,
@@ -131,8 +131,10 @@ class _ChatPageState extends State<ChatPage> {
                             color: Colors.blue,
                           ),
                           onPressed: () {
+
                             repository.addMessage(
                                 widget._roomId, _controller.text);
+                            _controller.text = "";
                           }),
                     ),
                   ],

@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'firestore/AuthService.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:math';
+import 'package:my_app/model/LocationInfo.dart';
+import 'package:location/location.dart';
 
 
 
@@ -16,8 +18,28 @@ class SearchPeopleWidget extends StatefulWidget{
 class SearchPeopleState extends State<SearchPeopleWidget> {
   FirebaseUser user;
 
+  bool isLocationKnown = false;
+  Location location = Location();
+  Map<String, double> currentLocation;
+
+
   @override
   void initState() {
+
+    location.onLocationChanged().listen((value) {
+      print('location changed');
+      currentLocation = value;
+      repository.updatePosition(currentLocation["latitude"].toString(), currentLocation["longitude"].toString());
+      if(!isLocationKnown) {
+        repository.fetchLocationInfo(currentLocation["latitude"].toString(),
+            currentLocation["longitude"].toString()).then((loc) {
+          print('FORMATTED ' + loc.formatted);
+          isLocationKnown = true;
+          repository.updateLocationInfo(loc.formatted);
+        });
+      }
+
+    });
 
     authService.getCurrentUser().then((firebaseUser) {
       setState(() {
@@ -71,7 +93,7 @@ class SearchPeopleState extends State<SearchPeopleWidget> {
                       if (snapshot.hasData) {
                         return new ListView.builder(
                           padding: new EdgeInsets.all(8.0),
-                          reverse: true,
+                          reverse: false,
                           itemBuilder: (_, int index) {
                             var currentUser = currentUserSnapshot.data.documents[0];
 
@@ -83,6 +105,7 @@ class SearchPeopleState extends State<SearchPeopleWidget> {
                             var latCurrentUser = currentUser['lat'].toString() == "null" ? "-" : currentUser['lat'].toString();
                             var lonCurrentUser = currentUser['lon'].toString() == "null" ? "-" : currentUser['lon'].toString();
                             var status = document['status'].toString() == "null" ? "-" : document['status'].toString();
+                            var locationInfo = document['locationInfo'].toString() == "null" ? "-" : document['locationInfo'].toString();
                             var distance = "-";
 
                             print('test: ' + lat + ' ' + lon + ' ' + latCurrentUser + ' ' + lonCurrentUser);
@@ -96,7 +119,7 @@ class SearchPeopleState extends State<SearchPeopleWidget> {
                               distance = distanceInKmBetweenEarthCoordinates(latD, lonD, latCurrentUserD, lonCurrentUserD).toStringAsFixed(1);
                             }
 
-                            return peopleItem(email, lat, lon, status, distance);
+                            return peopleItem(email, lat, lon, status, distance, locationInfo);
                           },
                           itemCount: snapshot.data.documents.length,
                         );
@@ -111,7 +134,7 @@ class SearchPeopleState extends State<SearchPeopleWidget> {
   }
 }
 
-Widget peopleItem(String nickname, String lat, String lon, String status, String distance) {
+Widget peopleItem(String nickname, String lat, String lon, String status, String distance, String locationInfo) {
   return Container(
       decoration: new BoxDecoration(
         color: Colors.amber,
@@ -125,6 +148,7 @@ Widget peopleItem(String nickname, String lat, String lon, String status, String
           Text(lat + ', ' + lon),
           Text(status),
           Text(distance),
+          Text(locationInfo),
           SizedBox(
             height: 10.0,
           ),
