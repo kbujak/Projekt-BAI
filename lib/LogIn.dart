@@ -49,12 +49,10 @@ class _LogInWidget extends State<LogInWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'FlutterBase',
-        home: Scaffold(
+    return Scaffold(
           appBar: AppBar(
-            title: Text('Project BAI'),
-            backgroundColor: Colors.amber,
+            title: Text('Log In'),
+            backgroundColor: Color.fromRGBO(0, 135, 147, 1.0),
           ),
           body: new Form(
             // padding: EdgeInsets.all(16.0),
@@ -68,12 +66,11 @@ class _LogInWidget extends State<LogInWidget> {
               ),
             ]),
           ),
-        ));
+        );
   }
 
   Widget _showBody() {
     return Column(children: <Widget>[
-      Center(child: Text("Log in to chat:")),
       Padding(
         padding: const EdgeInsets.fromLTRB(10.0, 50.0, 10.0, 0.0),
         child: new TextFormField(
@@ -85,7 +82,7 @@ class _LogInWidget extends State<LogInWidget> {
               hintText: 'E-mail',
               icon: new Icon(
                 Icons.account_circle,
-                color: Colors.blueAccent,
+                color: Color.fromRGBO(0, 135, 147, 1.0),
               ),
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
@@ -103,7 +100,7 @@ class _LogInWidget extends State<LogInWidget> {
               hintText: 'Password',
               icon: new Icon(
                 Icons.lock,
-                color: Colors.blueAccent,
+                color: Color.fromRGBO(0, 135, 147, 1.0),
               ),
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
@@ -117,13 +114,21 @@ class _LogInWidget extends State<LogInWidget> {
   Widget _showPrimaryButton() {
     return new Padding(
         padding: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),
-        child: new RaisedButton(
-          elevation: 5.0,
-          color: Colors.blue,
-          child: new Text('Log in',
-              style: new TextStyle(fontSize: 20.0, color: Colors.white)),
-          onPressed: _validateAndSubmit,
-        ));
+        child: ButtonTheme(
+            minWidth: 230,
+            height: 50,
+            child: MaterialButton(
+              elevation: 5.0,
+              color: Color.fromRGBO(0, 77, 122, 1.0),
+              shape: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+              child: Text(
+                  'Log in',
+                  style: new TextStyle(fontSize: 20.0, color: Colors.white)
+              ),
+              onPressed: () => _validateAndSubmit(),
+            )
+        ),
+    );
   }
 
   String validateEmail(String value) {

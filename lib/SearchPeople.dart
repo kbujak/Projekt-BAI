@@ -74,64 +74,76 @@ class SearchPeopleState extends State<SearchPeopleWidget> {
   @override
   Widget build(BuildContext context) {
     if(user == null) {
-      return Text('loading..');
+      return MaterialApp(
+        title: "Search People",
+        home: Scaffold(
+            appBar: AppBar(
+              title: Text('loading..'),
+              backgroundColor: Color.fromRGBO(0, 135, 147, 1.0),
+            )
+        )
+      );
     }else {
-      return new Scaffold(
-        appBar: AppBar(
-          title: Text("People"),
-        ),
-          body: Container(
-          child: Column(
-          children: <Widget>[
-          Text('People around you: ',
-            style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 2.0),
-          ),
-          Flexible(
-            child: new StreamBuilder(
-              stream: repository.getPeopleAroundYou(),
-              builder: (context, snapshot) {
-                return StreamBuilder(
-                    stream: repository.getCurrentUser(user.uid),
-                    builder: (context, currentUserSnapshot) {
-                      if (snapshot.hasData) {
-                        return new ListView.builder(
-                          padding: new EdgeInsets.all(8.0),
-                          reverse: false,
-                          itemBuilder: (_, int index) {
-                            var currentUser = currentUserSnapshot.data.documents[0];
+      return MaterialApp(
+        title: "",
+        home: Scaffold(
+            appBar: AppBar(
+              title: Text("People"),
+              backgroundColor: Color.fromRGBO(0, 135, 147, 1.0),
+            ),
+            body: Container(
+                child: Column(
+                    children: <Widget>[
+                      Text('People around you: ',
+                        style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 2.0),
+                      ),
+                      Flexible(
+                          child: new StreamBuilder(
+                              stream: repository.getPeopleAroundYou(),
+                              builder: (context, snapshot) {
+                                return StreamBuilder(
+                                    stream: repository.getCurrentUser(user.uid),
+                                    builder: (context, currentUserSnapshot) {
+                                      if (snapshot.hasData) {
+                                        return new ListView.builder(
+                                          padding: new EdgeInsets.all(8.0),
+                                          reverse: false,
+                                          itemBuilder: (_, int index) {
+                                            var currentUser = currentUserSnapshot.data.documents[0];
 
-                            DocumentSnapshot document =
-                            snapshot.data.documents[index];
-                            var lat = document['lat'].toString() == "null" ? "-" : document['lat'].toString();
-                            var lon = document['lon'].toString() == "null" ? "-" : document['lon'].toString();
-                            var email = document['email'].toString() == "null" ? "-" : document['email'].toString();
-                            var latCurrentUser = currentUser['lat'].toString() == "null" ? "-" : currentUser['lat'].toString();
-                            var lonCurrentUser = currentUser['lon'].toString() == "null" ? "-" : currentUser['lon'].toString();
-                            var status = document['status'].toString() == "null" ? "-" : document['status'].toString();
-                            var locationInfo = document['locationInfo'].toString() == "null" ? "-" : document['locationInfo'].toString();
-                            var distance = "-";
+                                            DocumentSnapshot document =
+                                            snapshot.data.documents[index];
+                                            var lat = document['lat'].toString() == "null" ? "-" : document['lat'].toString();
+                                            var lon = document['lon'].toString() == "null" ? "-" : document['lon'].toString();
+                                            var email = document['email'].toString() == "null" ? "-" : document['email'].toString();
+                                            var latCurrentUser = currentUser['lat'].toString() == "null" ? "-" : currentUser['lat'].toString();
+                                            var lonCurrentUser = currentUser['lon'].toString() == "null" ? "-" : currentUser['lon'].toString();
+                                            var status = document['status'].toString() == "null" ? "-" : document['status'].toString();
+                                            var locationInfo = document['locationInfo'].toString() == "null" ? "-" : document['locationInfo'].toString();
+                                            var distance = "-";
 
-                            print('test: ' + lat + ' ' + lon + ' ' + latCurrentUser + ' ' + lonCurrentUser);
-                            if (lat != "-" && lon != "-" && latCurrentUser != "-" && lonCurrentUser != "-") {
-                              print(lat);
-                              double latD = double.parse(lat);
-                              double lonD = double.parse(lon);
-                              double latCurrentUserD = double.parse(latCurrentUser);
-                              double lonCurrentUserD = double.parse(lonCurrentUser);
-                              print('DISTANCE: ' + distanceInKmBetweenEarthCoordinates(latD, lonD, latCurrentUserD, lonCurrentUserD).toString());
-                              distance = distanceInKmBetweenEarthCoordinates(latD, lonD, latCurrentUserD, lonCurrentUserD).toStringAsFixed(1);
-                            }
+                                            print('test: ' + lat + ' ' + lon + ' ' + latCurrentUser + ' ' + lonCurrentUser);
+                                            if (lat != "-" && lon != "-" && latCurrentUser != "-" && lonCurrentUser != "-") {
+                                              print(lat);
+                                              double latD = double.parse(lat);
+                                              double lonD = double.parse(lon);
+                                              double latCurrentUserD = double.parse(latCurrentUser);
+                                              double lonCurrentUserD = double.parse(lonCurrentUser);
+                                              print('DISTANCE: ' + distanceInKmBetweenEarthCoordinates(latD, lonD, latCurrentUserD, lonCurrentUserD).toString());
+                                              distance = distanceInKmBetweenEarthCoordinates(latD, lonD, latCurrentUserD, lonCurrentUserD).toStringAsFixed(1);
+                                            }
 
-                            return peopleItem(email, lat, lon, status, distance, locationInfo);
-                          },
-                          itemCount: snapshot.data.documents.length,
-                        );
-                      } else {
-                        return Container();
-                      }
-                    });
-              }))
-          ])));
+                                            return peopleItem(email, lat, lon, status, distance, locationInfo);
+                                          },
+                                          itemCount: snapshot.data.documents.length,
+                                        );
+                                      } else {
+                                        return Container();
+                                      }
+                                    });
+                              }))
+                    ]))),
+      );
     }
 
   }
@@ -140,7 +152,7 @@ class SearchPeopleState extends State<SearchPeopleWidget> {
 Widget peopleItem(String nickname, String lat, String lon, String status, String distance, String locationInfo) {
   return Container(
       decoration: new BoxDecoration(
-        color: Colors.amber,
+        color: Color.fromRGBO(0, 135, 147, 1.0),
         borderRadius: new BorderRadius.all(Radius.circular(10.0)),
       ),
       margin: EdgeInsets.all(8.0),

@@ -4,7 +4,7 @@ import 'Menu.dart';
 import 'LogIn.dart';
 import 'firestore/AuthService.dart';
 import 'RegisterNewAccount.dart';
-import 'firestore/Repository.dart';
+import 'dart:async';
 
 
 class SignInWidget extends StatelessWidget {
@@ -18,13 +18,10 @@ class SignInWidget extends StatelessWidget {
           }
 
           /// other way there is no user logged.
-          return MaterialApp(
-              title: 'FlutterBase',
-              debugShowCheckedModeBanner: false,
-              home: Scaffold(
+          return Scaffold(
                   appBar: AppBar(
-                    title: Text('Project BAI'),
-                    backgroundColor: Colors.amber,
+                    title: Text('Log in'),
+                    backgroundColor: Color.fromRGBO(0, 135, 147, 1.0),
                   ),
                   body: Center(
                     child: Column(
@@ -33,7 +30,8 @@ class SignInWidget extends StatelessWidget {
                         UserProfile() // <-- Built with StatefulWidget
                       ],
                     ),
-                  )));
+                  )
+          );
         });
   }
 }
@@ -95,26 +93,59 @@ class LoginButton extends StatelessWidget {
           } else {
             return new Column(
               children: <Widget>[
-                MaterialButton(
-                  onPressed: () => goToLogInForm(context),
-                  color: Colors.white,
-                  textColor: Colors.black,
-                  child: Text('Log in'),
+                Padding(padding: EdgeInsets.only(top: 100)),
+                ButtonTheme(
+                    minWidth: 230,
+                    height: 50,
+                    child: MaterialButton(
+                      elevation: 5.0,
+                      color: Color.fromRGBO(0, 77, 122, 1.0),
+                      shape: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                      child: Text(
+                          'Log in',
+                          style: new TextStyle(fontSize: 20.0, color: Colors.white)
+                      ),
+                      onPressed: () => goToLogInForm(context),
+                    )
                 ),
-                MaterialButton(
-                  onPressed: () => createNewAccount(context),
-                  color: Colors.white,
-                  textColor: Colors.black,
-                  child: Text('Create new account'),
+                Padding(padding: EdgeInsets.only(top: 10)),
+                ButtonTheme(
+                    minWidth: 230,
+                    height: 50,
+                    child: MaterialButton(
+                      elevation: 5.0,
+                      color: Color.fromRGBO(0, 77, 122, 1.0),
+                      shape: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                      child: Text(
+                          'Create new account',
+                          style: new TextStyle(fontSize: 20.0, color: Colors.white)
+                      ),
+                      onPressed: () => createNewAccount(context),
+                    )
                 ),
                 Padding(
-                    padding: EdgeInsets.only(top: 20),
-                    child: MaterialButton(
-                      onPressed: () => authService.googleSignIn(),
-                      color: Colors.blueAccent,
-                      textColor: Colors.black,
-                      child: Text('Login with Google'),
-                    )),
+                    padding: EdgeInsets.only(top: 10),
+                    child: ButtonTheme(
+                        minWidth: 230,
+                        height: 50,
+                        child: MaterialButton(
+                          elevation: 5.0,
+                          color: Colors.primaries[0],
+                          shape: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                          child: Text(
+                              'Log In with Google',
+                              style: new TextStyle(fontSize: 20.0, color: Colors.white)
+                          ),
+                          onPressed: () {
+                            authService.googleSignIn().then((user) {
+                              if (user != null) {
+                                goToMenu(context);
+                              }
+                            });
+                          },
+                        )
+                    ),
+                ),
               ],
             );
           }

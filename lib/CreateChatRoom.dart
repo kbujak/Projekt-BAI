@@ -39,34 +39,33 @@ class _MyCustomFormState extends State<MyCustomForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Status"),
+        title: Text("Create chat"),
+        backgroundColor: Color.fromRGBO(0, 135, 147, 1.0),
       ),
       body: Center(
           child: Column(
-        children: <Widget>[
-          Text('chat name: '),
-          TextField(
-            controller: chatName,
-          ),
-          Text('tags: '),
-          TextField(
-            controller: tags,
-          ),
-          RaisedButton(
-              child: Text('Go to chat'),
-              onPressed: () {
-                authService.getCurrentUser().then((user) {
-                  print(user.toString());
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ChatPage(
-                            user.email.toString(),
-                            //TODO for now hardcoded chat
-                            "-LegksTMPdJ4omainO7p")),
-                  );
-                });
-              })
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: TextField(
+                  controller: chatName,
+                  decoration: InputDecoration(
+                      hintText: "Chat name",
+                      contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 20)
+                  ),
+                )
+              ),
+              Padding(padding: EdgeInsets.only(top: 10)),
+              Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: TextField(
+                    controller: tags,
+                    decoration: InputDecoration(
+                        hintText: "Enter tags",
+                        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 20)
+                    ),
+                  )
+              )
         ],
       )),
       floatingActionButton: FloatingActionButton(

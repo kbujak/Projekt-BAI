@@ -20,13 +20,10 @@ class SingInAnonymousWidgetState extends State<SingInAnonymousWidget> {
           if (snapshot.hasData) {
             return Home();
           } else
-            return MaterialApp(
-              title: 'FlutterBase',
-              debugShowCheckedModeBanner: false,
-              home: Scaffold(
+            return Scaffold(
                 appBar: AppBar(
-                  title: Text('Project BAI'),
-                  backgroundColor: Colors.amber,
+                  title: Text('Log In Anonymously'),
+                  backgroundColor: Color.fromRGBO(0, 135, 147, 1.0),
                 ),
                 body: new ListView(children: <Widget>[
                   new Form(
@@ -39,16 +36,13 @@ class SingInAnonymousWidgetState extends State<SingInAnonymousWidget> {
                     ),
                   ),
                 ]),
-              ),
             );
         });
   }
 
   Widget _createAnonymousForm() {
     return new Column(children: <Widget>[
-      Padding(
-          padding: EdgeInsets.only(top: 20),
-          child: Text('Log in as anonymous user')),
+      Padding(padding: EdgeInsets.only(top: 30)),
       Center(
         child: Container(
           color: Colors.transparent,
@@ -56,7 +50,7 @@ class SingInAnonymousWidgetState extends State<SingInAnonymousWidget> {
           margin: new EdgeInsets.only(top: 20, left: 30, right: 30),
           child: new Container(
               decoration: new BoxDecoration(
-                color: Colors.lightBlueAccent,
+                color: Color.fromRGBO(0, 135, 147, 1.0),
                 borderRadius: new BorderRadius.all(new Radius.circular(10)),
               ),
               constraints: new BoxConstraints(
@@ -65,16 +59,26 @@ class SingInAnonymousWidgetState extends State<SingInAnonymousWidget> {
               child: new Column(children: <Widget>[
                 new Padding(
                   padding: EdgeInsets.all(15.0),
-                  child: new Text("Please, provide your temporary nickname:"),
+                  child: Text(
+                    "Please, provide your temporary nickname:",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white
+                    ),
+                  ),
                 ),
                 new Padding(
                     padding: EdgeInsets.all(10),
                     child: Container(
-                        color: Colors.white,
                         child: TextFormField(
                           keyboardType: TextInputType.text,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
+                            fillColor: Colors.white,
+                            filled: true,
                             labelText: 'Nickname',
+                            contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))
                           ),
                           validator: (String value) {
                             if (value.trim().isEmpty) {
@@ -91,13 +95,19 @@ class SingInAnonymousWidgetState extends State<SingInAnonymousWidget> {
   Widget _showLogInButton() {
     return new Padding(
         padding: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),
-        child: new RaisedButton(
-          elevation: 5.0,
-          color: Colors.blue,
-          child: new Text('Log in',
-              style: new TextStyle(fontSize: 20.0, color: Colors.white)),
-          onPressed: _validateAndSubmitAnonymous,
-        ));
+        child: ButtonTheme(
+          minWidth: 200,
+          height: 50,
+          child: RaisedButton(
+            elevation: 5.0,
+            color: Color.fromRGBO(0, 77, 122, 1.0),
+            shape: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+            child: new Text('Log in',
+                style: new TextStyle(fontSize: 20.0, color: Colors.white)),
+            onPressed: _validateAndSubmitAnonymous,
+          )
+        )
+        );
   }
 
   _validateAndSubmitAnonymous() async {
