@@ -27,33 +27,50 @@ class ActiveChatsState extends State<ActiveChatsWidget> {
   @override
   Widget build(BuildContext context) {
     return user == null ?
-    Text("User not authenticated") :
-    Scaffold(
-      body: Container(
-        padding: EdgeInsets.only(top: 10),
-        child: Column(
-          children: <Widget>[
-            Text(
-                "Chat rooms you participate",
-                style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 2.0)
+        MaterialApp(
+          title: "ActiveChats",
+          home: Scaffold(
+            appBar: AppBar(
+              title: Text("Active chats"),
+              backgroundColor: Color.fromRGBO(0, 135, 147, 1.0),
             ),
-            createChatsUI(
-                user,
-                repository.getChatsByParticipatory(user.uid),
-                "You haven't parcipated in any chat"
+            body: Text("User not authenticated"),
+          )
+        )
+        :
+    MaterialApp(
+        title: "ActiveChats",
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text("Active chats"),
+            backgroundColor: Color.fromRGBO(0, 135, 147, 1.0),
+          ),
+          body: Container(
+            padding: EdgeInsets.only(top: 10),
+            child: Column(
+              children: <Widget>[
+                Text(
+                    "Chat rooms you participate",
+                    style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 2.0)
+                ),
+                createChatsUI(
+                    user,
+                    repository.getChatsByParticipatory(user.uid),
+                    "You haven't parcipated in any chat"
+                ),
+                SizedBox(height: 15),
+                Text(
+                    "Chat rooms you created",
+                    style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 2.0)
+                ),
+                createChatsUI(user,
+                    repository.getChatsByCreator(user.uid),
+                    "You haven't created in any chat"
+                ),
+              ],
             ),
-            SizedBox(height: 15),
-            Text(
-                "Chat rooms you created",
-                style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 2.0)
-            ),
-            createChatsUI(user,
-                repository.getChatsByCreator(user.uid),
-                "You haven't created in any chat"
-            ),
-          ],
-        ),
-      ),
+          ),
+        )
     );
   }
 }

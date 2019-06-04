@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'firestore/AuthService.dart';
-import 'model/Chat.dart';
-import 'ChatPage.dart';
 import 'Utils/ChatWidgetHelper.dart';
 
 class ChatsWidget extends StatefulWidget {
@@ -33,6 +31,10 @@ class ChatsState extends State<ChatsWidget> {
   Widget build(BuildContext context) {
     if (user != null && widget.chatsQuery != null) {
       return Scaffold(
+        appBar: AppBar(
+          title: Text(widget.tag),
+          backgroundColor: Color.fromRGBO(0, 135, 147, 1.0),
+        ),
         body: Container(
           padding: EdgeInsets.only(top: 40),
           child: Column(
@@ -47,7 +49,14 @@ class ChatsState extends State<ChatsWidget> {
         ),
       );
     } else {
-      return Center(child: Text("Not authorized"));
+      return Scaffold(
+          appBar: AppBar(
+            title: Text(widget.tag),
+          ),
+          body: Expanded(
+              child: Center(child: Text("Not authorized"))
+          )
+      );
     }
   }
 }
