@@ -54,7 +54,7 @@ Widget createChatItem(Chat chat, FirebaseUser user, BuildContext context) {
       },
       child: Container(
           decoration: new BoxDecoration(
-            color: Colors.amber,
+            color: Color.fromRGBO(0, 135, 147, 1.0),
             borderRadius: new BorderRadius.all(Radius.circular(10.0)),
           ),
           margin: EdgeInsets.all(8.0),

@@ -21,13 +21,10 @@ class _RegisterNewAccountState extends State<RegisterNewAccount> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'FlutterBase',
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
+    return Scaffold(
           appBar: AppBar(
-            title: Text('Project BAI'),
-            backgroundColor: Colors.amber,
+            title: Text('Registration'),
+            backgroundColor: Color.fromRGBO(0, 135, 147, 1.0),
           ),
           body: ListView(children: <Widget>[
             Form(
@@ -35,12 +32,7 @@ class _RegisterNewAccountState extends State<RegisterNewAccount> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Center(
-                      child: Padding(
-                    padding: EdgeInsets.only(top: 10.0),
-                    child:
-                        Text("Registration:", style: TextStyle(fontSize: 15.0)),
-                  )),
+                  Padding(padding: EdgeInsets.only(top: 30)),
                   new Padding(
                       padding: EdgeInsets.all(10.0),
                       child: TextFormField(
@@ -48,7 +40,7 @@ class _RegisterNewAccountState extends State<RegisterNewAccount> {
                         decoration: const InputDecoration(
                           labelText: 'Name',
                           border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.lightBlue),
+                            borderSide: BorderSide(color: Color.fromRGBO(0, 135, 147, 1.0)),
                           ),
                         ),
                         validator: (String value) {
@@ -66,7 +58,7 @@ class _RegisterNewAccountState extends State<RegisterNewAccount> {
                               labelText: 'E-mail',
                               border: OutlineInputBorder(
                                   borderSide:
-                                      BorderSide(color: Colors.lightBlue))),
+                                      BorderSide(color: Color.fromRGBO(0, 135, 147, 1.0)))),
                           validator: (String value) {
                             if (value.trim().isEmpty) {
                               return 'E-mail is required!';
@@ -81,7 +73,7 @@ class _RegisterNewAccountState extends State<RegisterNewAccount> {
                               labelText: 'Nickname',
                               border: OutlineInputBorder(
                                   borderSide:
-                                      BorderSide(color: Colors.lightBlue))),
+                                      BorderSide(color: Color.fromRGBO(0, 135, 147, 1.0)))),
                           validator: (String value) {
                             if (value.trim().isEmpty) {
                               return 'Nickname is required!';
@@ -97,7 +89,7 @@ class _RegisterNewAccountState extends State<RegisterNewAccount> {
                               labelText: 'Password',
                               border: OutlineInputBorder(
                                   borderSide:
-                                      BorderSide(color: Colors.lightBlue))),
+                                      BorderSide(color: Color.fromRGBO(0, 135, 147, 1.0)))),
                           validator: (String value) {
                             if (value.trim().isEmpty) {
                               return 'Password is required!';
@@ -140,7 +132,7 @@ class _RegisterNewAccountState extends State<RegisterNewAccount> {
               ),
             ),
           ]),
-        ));
+        );
   }
 
   bool _submittable() {

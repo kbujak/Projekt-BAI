@@ -19,7 +19,7 @@ class ChatInfo extends StatelessWidget {
           if (snapshot.hasData) {
             return Container(
               decoration: new BoxDecoration(
-                color: Colors.lightBlue,
+                color: Color.fromRGBO(0, 135, 147, 1.0),
               ),
               padding: EdgeInsets.all(8.0),
               child: Column(
@@ -61,6 +61,10 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      appBar: AppBar(
+        title: Text("Chat"),
+        backgroundColor: Color.fromRGBO(0, 135, 147, 1.0),
+      ),
         body: Container(
           child: Column(
             children: <Widget>[
@@ -128,7 +132,7 @@ class _ChatPageState extends State<ChatPage> {
                       child: new IconButton(
                           icon: new Icon(
                             Icons.send,
-                            color: Colors.blue,
+                            color: Color.fromRGBO(0, 135, 147, 1.0),
                           ),
                           onPressed: () {
 
@@ -196,6 +200,8 @@ class _ChatPageState extends State<ChatPage> {
 
   Widget _message(
       String message, String userName, String photoUrl, String sent) {
+
+    print(sent);
     return Row(
       children: <Widget>[
         Container(
