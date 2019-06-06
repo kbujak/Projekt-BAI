@@ -57,12 +57,14 @@ class AuthService {
   void updateUserData(FirebaseUser user) async {
     DocumentReference ref = _db.collection('users').document(user.uid);
     var url = user.photoUrl == null ? "https://image.freepik.com/free-vector/man-avatar-profile-round-icon_24640-14044.jpg" : user.photoUrl;
+    var email = user.email == null ? "anonymous" : user.email;
+    var displayName = user.email == null ? "anonymous" : user.displayName;
 
     return ref.setData({
       'uid': user.uid,
-      'email': user.email,
+      'email': email,
       'photoURL': url,
-      'displayName': user.displayName,
+      'displayName': displayName,
       'lastSeen': DateTime.now()
     }, merge: true);
   }
