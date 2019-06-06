@@ -124,6 +124,9 @@ class Repository {
     var user = await _auth.currentUser();
     DocumentReference refUsers = _db.collection('users').document(user.uid);
 
+    var url = user.photoUrl == null ? "https://image.freepik.com/free-vector/man-avatar-profile-round-icon_24640-14044.jpg" : user.photoUrl;
+    var email = user.email == null ? "anonymous" : user.email;
+
     await addChatMember(roomId);
 
     refUsers.updateData({
@@ -133,11 +136,11 @@ class Repository {
     return ref.setData({
       //'id': chat.id,
       'roomId': roomId,
-      'sender': user.email,
+      'sender': email,
       'senderId': user.uid,
       'sent': DateTime.now(),
       'message': message,
-      'photoUrl': user.photoUrl
+      'photoUrl': url
     }, merge: true);
   }
 
