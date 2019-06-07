@@ -104,7 +104,7 @@ class SearchPeopleState extends State<SearchPeopleWidget> {
                                 return StreamBuilder(
                                     stream: repository.getCurrentUser(user.uid),
                                     builder: (context, currentUserSnapshot) {
-                                      if (snapshot.hasData) {
+                                      if (snapshot.hasData && currentUserSnapshot.hasData) {
                                         return new ListView.builder(
                                           padding: new EdgeInsets.all(8.0),
                                           reverse: false,

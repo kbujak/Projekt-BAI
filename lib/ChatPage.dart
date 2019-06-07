@@ -65,6 +65,7 @@ class _ChatPageState extends State<ChatPage> {
         title: Text("Chat"),
         backgroundColor: Color.fromRGBO(0, 135, 147, 1.0),
       ),
+        resizeToAvoidBottomPadding: false,
         body: Container(
           child: Column(
             children: <Widget>[

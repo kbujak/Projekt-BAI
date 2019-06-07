@@ -51,7 +51,6 @@ class _HomeState extends State<Home> {
   final List<Widget> _children = [
     CreateChatRoom(),
     ActiveChatsWidget(),
-    PlaceholderWidget(MenuState.Interests),
     SearchTagsWidget(),
     SearchPeopleWidget(),
     Container()
@@ -84,16 +83,12 @@ class _HomeState extends State<Home> {
         currentIndex: _currentIndex, // new
         items: [
           new BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            title: Text('Status'),
+            icon: Icon(Icons.add_comment),
+            title: Text('Start'),
           ),
           new BottomNavigationBarItem(
             icon: Icon(Icons.announcement),
             title: Text('Chats'),
-          ),
-          new BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle),
-            title: Text('Interests'),
           ),
           new BottomNavigationBarItem(
             icon: Icon(Icons.mail),
