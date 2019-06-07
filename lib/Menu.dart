@@ -68,7 +68,7 @@ class _HomeState extends State<Home> {
     setState(() {
       _currentIndex = index;
     });
-    if (_currentIndex == 5) {
+    if (_currentIndex == 4) {
       _singOutAndGoToMain();
     }
   }
