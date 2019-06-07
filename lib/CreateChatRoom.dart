@@ -42,6 +42,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
         title: Text("Create chat"),
         backgroundColor: Color.fromRGBO(0, 135, 147, 1.0),
       ),
+      resizeToAvoidBottomPadding: false,
       body: Center(
           child: Column(
             children: <Widget>[
