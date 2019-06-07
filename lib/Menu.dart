@@ -83,8 +83,8 @@ class _HomeState extends State<Home> {
         currentIndex: _currentIndex, // new
         items: [
           new BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            title: Text('Status'),
+            icon: Icon(Icons.add_comment),
+            title: Text('Start'),
           ),
           new BottomNavigationBarItem(
             icon: Icon(Icons.announcement),
