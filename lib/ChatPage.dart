@@ -65,6 +65,7 @@ class _ChatPageState extends State<ChatPage> {
         title: Text("Chat"),
         backgroundColor: Color.fromRGBO(0, 135, 147, 1.0),
       ),
+        resizeToAvoidBottomPadding: false,
         body: Container(
           child: Column(
             children: <Widget>[
@@ -104,8 +105,8 @@ class _ChatPageState extends State<ChatPage> {
                                 : _message(
                                 document['message'],
                                 document['sender'],
-                                "https://image.freepik.com/free-vector/man-avatar-profile-round-icon_24640-14044.jpg",
-                                //members[document['senderId']].photoURL,
+                                //"https://image.freepik.com/free-vector/man-avatar-profile-round-icon_24640-14044.jpg",
+                                members[document['senderId']].photoURL,
                                 document['sent'].toString());
                           },
                           itemCount: snapshot1.data.documents.length,
@@ -177,17 +178,17 @@ class _ChatPageState extends State<ChatPage> {
                           shape: BoxShape.circle,
                           image: new DecorationImage(
                               fit: BoxFit.fill,
-                              image: new NetworkImage(photoUrl))),
+                              image: new NetworkImage(photoUrl ?? "https://image.freepik.com/free-vector/man-avatar-profile-round-icon_24640-14044.jpg"))),
                       margin: EdgeInsets.fromLTRB(8, 0, 8, 0),
                       width: 25.0,
                       height: 25.0,
                     ),
-                    Text(userName),
+                    Text(userName ?? "Anonymous"),
                   ],
                 ),
               ),
               Text(sent.substring(11, 16)),
-              Text(message),
+              Text(message, overflow: TextOverflow.clip, softWrap: true,),
               SizedBox(
                 height: 10.0,
               ),
@@ -225,12 +226,12 @@ class _ChatPageState extends State<ChatPage> {
                           shape: BoxShape.circle,
                           image: new DecorationImage(
                               fit: BoxFit.fill,
-                              image: new NetworkImage(photoUrl))),
+                              image: new NetworkImage(photoUrl ?? "https://image.freepik.com/free-vector/man-avatar-profile-round-icon_24640-14044.jpg"))),
                       margin: EdgeInsets.fromLTRB(8, 0, 8, 0),
                       width: 25.0,
                       height: 25.0,
                     ),
-                    Text(userName),
+                    Text(userName ?? "Anonymous"),
                   ],
                 ),
               ),
